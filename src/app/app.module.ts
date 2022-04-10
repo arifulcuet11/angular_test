@@ -34,11 +34,11 @@ export interface AppConfig {
     AppComponent
   ],
   providers: [
-      {
-        provide: HTTP_INTERCEPTORS,
-        useClass: HttpHandlerInterceptor,
-        multi: true
-      }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpHandlerInterceptor,
+      multi: true
+    }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
