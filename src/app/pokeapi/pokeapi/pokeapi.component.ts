@@ -20,13 +20,11 @@ export class PokeapiComponent implements OnInit {
   pageIndex = 0;
   isLoading = false;
   pageSize = 5;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(private pokemonService: PokeapiService,
     private store: Store<AppState>) {
     this.store.select(selectPokemons).subscribe(res => {
       this.load(res);
-      this.dataSource.paginator = this.paginator;
     });
     this.store.select(selectPokemonsLoading).subscribe(res => {
       this.isLoading = res;
@@ -35,17 +33,13 @@ export class PokeapiComponent implements OnInit {
 
   ngOnInit(): void {
     this.pokemonService.getPokemons(151);
-    this.paginator.pageIndex = 0;
-
   }
   load(data: Pokemon[]) {
     this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
   getId(url: string) {
-    const pokemonIndex = url?.split('/')[url?.split('/').length - 2];
-    return pokemonIndex;
+    return url?.split('/')[url?.split('/').length - 2];
   }
   ChangePage($event: PageEvent) {
     this.pageIndex = $event.pageIndex;
